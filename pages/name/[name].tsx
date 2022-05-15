@@ -13,7 +13,6 @@ interface Props {
 }
 
 const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
-  console.log('🚀 ~ file: [name].tsx ~ line 16 ~ pokemon', pokemon);
   const [isInFavorites, setIsInFavorites] = useState(false);
   useEffect(() => {
     setIsInFavorites(localFavorites.isExistPokemoninFavorites(pokemon.id));
