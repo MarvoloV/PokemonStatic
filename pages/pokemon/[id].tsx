@@ -38,7 +38,6 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                 "@xs": {
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  backgroundColor: "blue",
                 },
               }}
             >
