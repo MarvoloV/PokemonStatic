@@ -1,4 +1,4 @@
-import { Card, Grid, Row, Text } from '@nextui-org/react';
+import { Grid } from '@nextui-org/react';
 import type { NextPage, GetStaticProps } from 'next';
 import { pokeapi } from '../api';
 import { Layout } from '../components/layouts';
