@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { GetStaticProps, NextPage, GetStaticPaths } from "next";
-import { Button, Card, Container, Grid, Text, Image } from "@nextui-org/react";
+import { useEffect, useState } from 'react';
+import { GetStaticProps, NextPage, GetStaticPaths } from 'next';
+import { Button, Card, Container, Grid, Text, Image } from '@nextui-org/react';
 
-import { pokeapi } from "../../api";
-import { Layout } from "../../components/layouts";
-import { Pokemon } from "../../interfaces";
-import { localFavorites } from "../../utils";
+import confetti from 'canvas-confetti';
+
+import { pokeapi } from '../../api';
+import { Layout } from '../../components/layouts';
+import { Pokemon } from '../../interfaces';
+import { localFavorites } from '../../utils';
 
 interface Props {
   pokemon: Pokemon;
@@ -19,17 +21,30 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
   const onTogleFavorite = () => {
     localFavorites.togleFavorite(pokemon.id);
     setIsInFavorites(!isInFavorites);
+    if (isInFavorites) {
+      return;
+    }
+    confetti({
+      zIndex: 999,
+      particleCount: 100,
+      spread: 160,
+      angle: -100,
+      origin: {
+        x: 1,
+        y: 0,
+      },
+    });
   };
   return (
     <Layout title={pokemon.name}>
-      <Grid.Container css={{ marginTop: "5px" }} gap={2}>
+      <Grid.Container css={{ marginTop: '5px' }} gap={2}>
         <Grid xs={12} sm={4}>
-          <Card hoverable css={{ padding: "30px" }}>
+          <Card hoverable css={{ padding: '30px' }}>
             <Card.Body>
               <Card.Image
                 src={
                   pokemon.sprites.other?.dream_world.front_default ||
-                  "/no-image.png"
+                  '/no-image.png'
                 }
                 alt={pokemon.name}
                 width="100%"
@@ -42,12 +57,12 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
           <Card>
             <Card.Header
               css={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                "@xs": {
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                '@xs': {
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 },
               }}
             >
@@ -59,7 +74,7 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
                 ghost={!isInFavorites}
                 onClick={onTogleFavorite}
               >
-                {isInFavorites ? "En Favoritos" : "Guardar en Favoritos"}
+                {isInFavorites ? 'En Favoritos' : 'Guardar en Favoritos'}
               </Button>
             </Card.Header>
             <Card.Body>
