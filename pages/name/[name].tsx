@@ -6,12 +6,14 @@ import { Layout } from '../../components/layouts';
 import { Pokemon, PokemonListResponse } from '../../interfaces';
 import { localFavorites } from '../../utils';
 import { pokeapi } from '../../api';
+import { Sprites } from '../../interfaces/pokemon-full';
 
 interface Props {
   pokemon: Pokemon;
 }
 
 const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
+  console.log('🚀 ~ file: [name].tsx ~ line 16 ~ pokemon', pokemon);
   const [isInFavorites, setIsInFavorites] = useState(false);
   useEffect(() => {
     setIsInFavorites(localFavorites.isExistPokemoninFavorites(pokemon.id));
@@ -127,12 +129,17 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 };
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-  const { data } = await pokeapi.get(
+  const { data } = await pokeapi.get<Pokemon>(
     `https://pokeapi.co/api/v2/pokemon/${name}`
   );
+  const pokemon = {
+    id: data.id,
+    name: data.name,
+    sprites: data.sprites,
+  };
   return {
     props: {
-      pokemon: data,
+      pokemon,
     },
   };
 };
